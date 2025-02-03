@@ -17,6 +17,8 @@
 #include <optional>
 #include <string>
 
+#include "rclcpp/executor_options.hpp"
+#include "rclcpp/executors/multi_threaded_executor.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -25,8 +27,10 @@ using std::placeholders::_1;
 class MinimalSubscriber : public rclcpp::Node {
 public:
   MinimalSubscriber() : Node("minimal_subscriber") {
-    subscription_ = this->create_subscription<std_msgs::msg::String>("topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
-    this->t_ = std::thread(std::bind(&MinimalSubscriber::thread_function, this));
+    subscription_ = this->create_subscription<std_msgs::msg::String>(
+        "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+    this->t_ =
+        std::thread(std::bind(&MinimalSubscriber::thread_function, this));
     rclcpp::on_shutdown(std::bind(&MinimalSubscriber::shutdown, this));
   }
 
@@ -54,7 +58,8 @@ private:
       std::string v;
       {
         std::unique_lock<std::mutex> lk(mtx_);
-        cond_.wait(lk, [this] { return this->buf_.has_value() || this->finish_; });
+        cond_.wait(lk,
+                   [this] { return this->buf_.has_value() || this->finish_; });
         if (this->finish_) {
           RCLCPP_INFO(this->get_logger(), "-- exit:");
           break;
@@ -91,7 +96,11 @@ private:
 
 int main(int argc, char *argv[]) {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<MinimalSubscriber>());
+  auto node = std::make_shared<MinimalSubscriber>();
+  auto exec =
+      rclcpp::executors::MultiThreadedExecutor(rclcpp::ExecutorOptions(), 4);
+  exec.add_node(node);
+  exec.spin();
   rclcpp::shutdown();
   return 0;
 }
