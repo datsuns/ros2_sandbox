@@ -25,6 +25,7 @@ using namespace std::chrono_literals;
 class MinimalSubscriber : public rclcpp::Node {
 public:
   MinimalSubscriber() : Node("minimal_subscriber") {
+    this->n = 0;
     client_cb_group_ = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
     timer_cb_group_ = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
 
@@ -59,17 +60,17 @@ private:
 
   void timer_callback() {
     RCLCPP_INFO(this->get_logger(), "Timer");
-    // this->long_task();
+    std::thread([this]() { this->long_task(this->n++); }).detach();
   }
 
-  void long_task() {
-    RCLCPP_INFO(this->get_logger(), ">> long_task");
+  void long_task(int n) {
+    RCLCPP_INFO(this->get_logger(), ">> long_task %d", n);
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     // std::future<void> result =
     //     std::async(std::launch::async, &MinimalSubscriber::long_task, this);
 
     // std::async(std::launch::async, &MinimalSubscriber::long_task, this);
-    RCLCPP_INFO(this->get_logger(), "<< long_task");
+    RCLCPP_INFO(this->get_logger(), "<< long_task %d", n);
   }
 
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
@@ -78,6 +79,7 @@ private:
   rclcpp::CallbackGroup::SharedPtr timer_cb_group_;
   std::thread t;
   bool finish = false;
+  int n;
 };
 
 int main(int argc, char *argv[]) {
