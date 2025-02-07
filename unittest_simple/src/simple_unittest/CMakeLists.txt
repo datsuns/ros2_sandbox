@@ -26,6 +26,12 @@ install(TARGETS
 )
 
 if(BUILD_TESTING)
+  # コードカバレッジ用
+  set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} --coverage") # 追加
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage") # 追加
+
+
+  # テスト用定義
   find_package(ament_cmake_gtest REQUIRED)
 
   ament_add_gtest(${PROJECT_NAME}_test test/test_simple_node.cpp)
