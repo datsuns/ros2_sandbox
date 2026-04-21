@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y \
     ros-humble-gazebo-ros-pkgs \
     python3-pip \
     git \
+    wget \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Source ROS 2 in bashrc
