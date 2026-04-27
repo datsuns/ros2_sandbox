@@ -2,6 +2,11 @@
 
 ## Goal
 Create a sample environment that demonstrates how to build ROS 2 nodes using both standard `colcon` and `bazel`. The sample will include packages that depend on `pcl_conversions` and `diagnostic_updater`. 
+
+### Build Requirements
+- **Bazel version**: 7.6.1
+- **Bazel dependency management**: WORKSPACE-based
+
 The Bazel build approach will be implemented in three phases, using separate packages for each step:
 1. Use pre-installed packages in `/opt/ros` (Jazzy).
 2. Change ROS 2 version to `humble`.
