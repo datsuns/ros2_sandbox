@@ -13,4 +13,6 @@ use_repo(
     ros2,
     "ros2_rclcpp",
     "ros2_diagnostics",
+    "ros2_common_interfaces",
+    "ros2_message_filters",
 )

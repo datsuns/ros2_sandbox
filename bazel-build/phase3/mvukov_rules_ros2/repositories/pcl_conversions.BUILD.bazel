@@ -1,0 +1,14 @@
+cc_library(
+    name = "pcl_conversions",
+    hdrs = glob(["pcl_conversions/include/**/*.h"]),
+    includes = ["pcl_conversions/include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_common_interfaces//:cpp_sensor_msgs",
+        "@ros2_message_filters//:message_filters",
+        "@ros2_pcl_msgs//:cpp_pcl_msgs",
+        "@pcl//:pcl",
+        "@eigen//:eigen",
+    ],
+)

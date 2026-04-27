@@ -26,3 +26,41 @@
 
 ### 5. 総合評価
 ROS 2 パッケージの対応数が多く、コミュニティの活発さも感じられる。実プロジェクトへの導入において第一候補となる。
+
+---
+
+## 付録: 手動でのパッケージ追加手順 (pcl_conversions の例)
+
+`mvukov/rules_ros2` の標準リポジトリリストに含まれていないパッケージを追加する場合のワークフロー。
+
+### 1. リポジトリの定義 (WORKSPACE)
+`http_archive` を使用して GitHub 等からソースを取得する。
+
+```python
+http_archive(
+    name = "ros2_pcl_conversions",
+    build_file = "//repositories:pcl_conversions.BUILD.bazel", # 外部ビルドファイルを指定
+    strip_prefix = "perception_pcl-2.4.5",
+    urls = ["https://github.com/ros-perception/perception_pcl/archive/refs/tags/2.4.5.tar.gz"],
+)
+```
+
+### 2. カスタム BUILD ファイルの作成
+取得したソースに対して、Bazel のルールを適用する `BUILD` ファイルを作成する。
+- **C++ ライブラリの場合**: `cc_library` を使用。
+- **メッセージパッケージの場合**: `ros2_interface_library` ルール（`@com_github_mvukov_rules_ros2//ros2:interfaces.bzl`）を使用して IDL からコード生成を行う。
+
+### 3. MODULE.bazel での依存関係の公開
+`non_module_deps` を通じて、そのパッケージが依存する他の ROS 2 パッケージを `use_repo` でメインレポジトリから見えるようにする。
+
+```python
+ros2 = use_extension("@com_github_mvukov_rules_ros2//ros2:extensions.bzl", "non_module_deps")
+use_repo(
+    ros2,
+    "ros2_rclcpp",
+    "ros2_common_interfaces", # 依存する標準パッケージを追加
+)
+```
+
+### 4. 依存パッケージの解決
+推移的な依存関係（例: `pcl_conversions` -> `pcl_msgs` -> `sensor_msgs`）を一つずつ解決していく必要がある。標準で用意されていないメッセージパッケージも同様に `http_archive` で追加可能。

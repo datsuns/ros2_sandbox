@@ -26,3 +26,21 @@ cc_library(
 )
     """,
 )
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "ros2_pcl_conversions",
+    build_file = "//repositories:pcl_conversions.BUILD.bazel",
+    sha256 = "018f1ceae604cae9e9beb1bbae31e79052f35c71bbbcedcf5adb44aaaf4aedab",
+    strip_prefix = "perception_pcl-2.4.5",
+    urls = ["https://github.com/ros-perception/perception_pcl/archive/refs/tags/2.4.5.tar.gz"],
+)
+
+http_archive(
+    name = "ros2_pcl_msgs",
+    build_file = "//repositories:pcl_msgs.BUILD.bazel",
+    sha256 = "9a3256d5bd44a2e99526c5cf4ed16198471d2b43c63be74a5fcf8d0dcbb29489",
+    strip_prefix = "pcl_msgs-1.0.0",
+    urls = ["https://github.com/ros-perception/pcl_msgs/archive/refs/tags/1.0.0.tar.gz"],
+)
