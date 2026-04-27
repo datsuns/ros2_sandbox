@@ -38,17 +38,24 @@ The Bazel build approach will be implemented in three phases, using separate pac
 - Create `BUILD` files linking to `/opt/ros/humble`.
 - Build and verify with `bazel build //src/humble_opt/...`.
 
-## Phase 3: ROS 2 Humble with `rules_ros`
-### 3.1. Bazel WORKSPACE Update
-- Add `rules_ros` repository and dependencies to `WORKSPACE`.
+## Phase 3: ROS 2 Humble with rules_ros (Comparison)
+このフェーズでは、BazelのROS 2ルールである `rules_ros` を導入し、手動でのパス指定からルールベースの管理へ移行します。`mvukov/rules_ros2` と `ApexAI/rules_ros` の2つを比較検討します。
 
-### 3.2. Bazel build using `rules_ros`
-- Create `src/humble_rules_ros/pcl_sample` and `src/humble_rules_ros/diag_sample`.
-- Create `BUILD` files using `rules_ros` targets (e.g., `@ros2//:rclcpp`, `@ros2//:pcl_conversions` depending on rules_ros setup).
-- Build and verify with `bazel build //src/humble_rules_ros/...`.
+### 3.1. Common Strategy
+- **Format**: 互換性と実績を考慮し、`WORKSPACE` 形式を維持します。
+- **Approach**: 初回ビルドの成功と安定性を優先し、システムの `/opt/ros/humble` をインポートして利用する方式（Local ROS integration）をまず採用します。
+
+### 3.2. mvukov/rules_ros2 Integration
+- **Workspace**: `phase3/mvukov_rules_ros2/`
+- **Setup**: `mvukov/rules_ros2` を `WORKSPACE` で設定し、ローカルのHumble環境をインポートします。
+- **Package**: `src/humble_opt/` 配下の既存コードを `rules_ros2` のマクロ（`ros2_cpp_binary`等）でビルドできるように `BUILD` ファイルを書き換えます。
+
+### 3.3. ApexAI/rules_ros Integration
+- **Workspace**: `phase3/apexai_rules_ros/`
+- **Setup**: `ApexAI/rules_ros` を `WORKSPACE` で設定。
+- **Package**: 同様に既存コードの `BUILD` ファイルを書き換えてビルドを確認します。
 
 ## Verification Plan
-- Ensure each phase's devcontainer launches successfully.
-- Ensure `colcon build` works for the baseline.
-- Ensure `bazel build` works for each specific package in its respective phase.
-- Run the generated binaries to ensure they execute properly.
+- [ ] `mvukov/rules_ros2` 版のビルド成功と実行確認
+- [ ] `ApexAI/rules_ros` 版のビルド成功と実行確認
+- [ ] 両者の記述量、柔軟性、ビルド速度等の比較
