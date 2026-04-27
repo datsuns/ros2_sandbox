@@ -1,0 +1,17 @@
+{
+    "name": "ROS 2 Jazzy Bazel Sandbox",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-iot.vscode-ros",
+                "ms-vscode.cpptools",
+                "bazelbuild.vscode-bazel"
+            ]
+        }
+    },
+    "remoteUser": "root",
+    "postCreateCommand": "echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc"
+}
