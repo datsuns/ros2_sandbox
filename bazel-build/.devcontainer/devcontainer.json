@@ -12,6 +12,6 @@
             ]
         }
     },
-    "remoteUser": "root",
-    "postCreateCommand": "echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc"
+    "remoteUser": "rosuser",
+    "postCreateCommand": "sudo chown -R rosuser:rosuser /workspaces/sandbox/bazel-build && echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc"
 }

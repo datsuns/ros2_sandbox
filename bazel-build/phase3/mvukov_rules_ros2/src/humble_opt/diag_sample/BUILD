@@ -1,8 +1,10 @@
-cc_binary(
+load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary")
+
+ros2_cpp_binary(
     name = "diag_sample_node",
     srcs = ["src/diag_sample_node.cpp"],
-    copts = ["-std=c++17"],
     deps = [
-        "@ros2//:ros2",
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_diagnostics//:cpp_diagnostic_updater",
     ],
 )

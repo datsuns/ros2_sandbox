@@ -1,15 +1,1 @@
-# Bazel
-/bazel-*
-/MODULE.bazel.lock
-
-# ROS 2 (colcon)
-/build/
-/install/
-/log/
-
-# IDE
-.vscode/
-.agents/
-
-# OS
-.DS_Store
+python3

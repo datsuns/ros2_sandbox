@@ -1,6 +1,6 @@
 # Bazel
-/bazel-*
-/MODULE.bazel.lock
+bazel-*
+MODULE.bazel.lock
 
 # ROS 2 (colcon)
 /build/

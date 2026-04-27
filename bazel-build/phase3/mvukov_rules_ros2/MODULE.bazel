@@ -1,6 +1,16 @@
-###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
-# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
-#
-# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
-###############################################################################
+module(
+    name = "mvukov_rules_ros2_sample",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "0.0.0-20260118-78d85ff")
+
+# Use the non_module_deps extension
+ros2 = use_extension("@com_github_mvukov_rules_ros2//ros2:extensions.bzl", "non_module_deps")
+
+# Import the specific ROS 2 packages we need
+use_repo(
+    ros2,
+    "ros2_rclcpp",
+    "ros2_diagnostics",
+)
