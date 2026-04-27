@@ -1,0 +1,12 @@
+services:
+  test-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ros2-test-container
+    environment:
+      - ROS_DOMAIN_ID=0
+    network_mode: host
+    tty: true
+    stdin_open: true
+    restart: "no"
