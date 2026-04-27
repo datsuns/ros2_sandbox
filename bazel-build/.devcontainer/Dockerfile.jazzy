@@ -1,4 +1,4 @@
-FROM osrf/ros:humble-desktop
+FROM osrf/ros:jazzy-desktop
 
 # Install basic dependencies, colcon, bazel, and required ROS 2 packages
 RUN apt-get update && apt-get install -y \
@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
     git \
     build-essential \
     python3-colcon-common-extensions \
-    ros-humble-pcl-conversions \
-    ros-humble-diagnostic-updater \
+    ros-jazzy-pcl-conversions \
+    ros-jazzy-diagnostic-updater \
     && rm -rf /var/lib/apt/lists/*
 
 # Install bazelisk as bazel
@@ -16,4 +16,4 @@ RUN wget https://github.com/bazelbuild/bazelisk/releases/download/v1.20.0/bazeli
     && chmod +x /usr/local/bin/bazel
 
 # Source ROS 2 setup in bashrc
-RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc

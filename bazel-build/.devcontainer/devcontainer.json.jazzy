@@ -1,5 +1,5 @@
 {
-    "name": "ROS 2 Humble Bazel Sandbox",
+    "name": "ROS 2 Jazzy Bazel Sandbox",
     "build": {
         "dockerfile": "Dockerfile"
     },
@@ -13,5 +13,5 @@
         }
     },
     "remoteUser": "root",
-    "postCreateCommand": "echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc"
+    "postCreateCommand": "echo 'source /opt/ros/jazzy/setup.bash' >> ~/.bashrc"
 }

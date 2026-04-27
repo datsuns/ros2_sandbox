@@ -3,7 +3,7 @@ workspace(name = "ros2_bazel_sandbox")
 # Phase 1: Local /opt/ros bindings
 new_local_repository(
     name = "ros2",
-    path = "/opt/ros/jazzy",
+    path = "/opt/ros/humble",
     build_file_content = """
 cc_library(
     name = "ros2",
@@ -134,8 +134,8 @@ new_local_repository(
     build_file_content = """
 cc_library(
     name = "pcl",
-    hdrs = glob(["include/pcl-1.14/**"]),
-    includes = ["include/pcl-1.14"],
+    hdrs = glob(["include/pcl-1.12/**"]),
+    includes = ["include/pcl-1.12"],
     srcs = glob(["lib/x86_64-linux-gnu/libpcl_*.so"]),
     visibility = ["//visibility:public"],
 )
