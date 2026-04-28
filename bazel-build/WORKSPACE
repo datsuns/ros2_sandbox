@@ -122,7 +122,7 @@ cc_library(
         "include/urdfdom_headers",
         "include/visualization_msgs",
     ],
-    srcs = glob(["lib/*.so"]),
+    srcs = glob(["lib/**/*.so*", "opt/**/*.so*"]),
     visibility = ["//visibility:public"],
 )
     """,

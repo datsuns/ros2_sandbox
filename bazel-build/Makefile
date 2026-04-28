@@ -29,6 +29,12 @@ bazel-build:
 bazel-build-humble:
 	bazel build //src/humble_opt/...
 
+bazel-run-diag:
+	bazel run --subcommands //src/humble_opt/diag_sample:diag_sample_node
+
+bazel-run-pcl:
+	bazel run --subcommands //src/humble_opt/pcl_sample:pcl_sample_node
+
 # Clean all build artifacts
 clean: clean-colcon clean-bazel
 
